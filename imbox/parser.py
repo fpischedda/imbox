@@ -119,7 +119,11 @@ def decode_content(message):
 
 def parse_email(raw_email):
     if isinstance(raw_email, binary_type):
-        raw_email = str_encode(raw_email, 'utf-8')
+        try:
+            raw_email = str_encode(raw_email, 'utf-8')
+        except:
+            raw_email = str_encode(raw_email, 'iso-8859-1')
+
     email_message = email.message_from_string(raw_email)
     maintype = email_message.get_content_maintype()
     parsed_email = {}
